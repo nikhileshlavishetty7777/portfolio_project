@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nikhilesl Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#050508;
+--bg2:#0d0d14;
+--bg3:#12121c;
+--glass:rgba(255,255,255,0.04);
+--glass2:rgba(255,255,255,0.07);
+--border:rgba(255,255,255,0.08);
+--border2:rgba(120,100,255,0.3);
+--neon1:#7c6fff;
+--neon2:#00d4ff;
+--neon3:#ff6be7;
+--text:#f0efff;
+--muted:#7a7a9a;
+--card:#0f0f1a;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;overflow-x:hidden;min-height:100vh}
+h1,h2,h3{font-family:'Syne',sans-serif}
+code,pre{font-family:'JetBrains Mono',monospace}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--neon1);border-radius:2px}
+
+/* SCROLL PROGRESS */
+#progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--neon1),var(--neon2),var(--neon3));z-index:9999;transition:width 0.1s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);background:rgba(5,5,8,0.7);transition:all 0.3s}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;background:linear-gradient(135deg,var(--neon1),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;letter-spacing:0.05em;transition:color 0.2s}
+.nav-links a:hover{color:var(--neon2)}
+.nav-badge{background:linear-gradient(135deg,var(--neon1),var(--neon2));color:#fff;font-size:0.7rem;padding:0.25rem 0.7rem;border-radius:999px;font-weight:600;letter-spacing:0.05em}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:6rem 2rem 2rem}
+.hero-bg{position:absolute;inset:0;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.15;animation:float 8s ease-in-out infinite}
+.orb1{width:600px;height:600px;background:var(--neon1);top:-100px;left:-100px;animation-delay:0s}
+.orb2{width:500px;height:500px;background:var(--neon2);bottom:-50px;right:-50px;animation-delay:3s}
+.orb3{width:400px;height:400px;background:var(--neon3);top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:6s}
+.grid-overlay{position:absolute;inset:0;background-image:linear-gradient(rgba(120,100,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(120,100,255,0.03) 1px,transparent 1px);background-size:50px 50px}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,20px) scale(1.05)}}
+
+.hero-content{position:relative;z-index:2;max-width:900px;text-align:center}
+.hero-tag{display:inline-flex;align-items:center;gap:0.5rem;background:var(--glass);border:1px solid var(--border2);color:var(--neon2);font-size:0.78rem;padding:0.4rem 1rem;border-radius:999px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.5rem}
+.tag-dot{width:6px;height:6px;background:var(--neon2);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero h1{font-size:clamp(2.5rem,6vw,5rem);font-weight:800;line-height:1.05;margin-bottom:1rem}
+.grad{background:linear-gradient(135deg,#fff 30%,var(--neon1),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:1.1rem;color:var(--muted);margin-bottom:0.5rem}
+.hero-tagline{font-size:1rem;color:var(--muted);max-width:600px;margin:0 auto 2.5rem;line-height:1.6}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.75rem;border-radius:999px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.25s;text-decoration:none;border:none;font-family:inherit}
+.btn-primary{background:linear-gradient(135deg,var(--neon1),var(--neon2));color:#fff;box-shadow:0 0 30px rgba(124,111,255,0.4)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(124,111,255,0.6)}
+.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text)}
+.btn-ghost:hover{background:var(--glass);border-color:var(--neon1);transform:translateY(-2px)}
+
+/* FLOATING TECH ICONS */
+.tech-float{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+.tech-pill{display:flex;align-items:center;gap:0.4rem;background:var(--glass);border:1px solid var(--border);padding:0.4rem 0.8rem;border-radius:999px;font-size:0.78rem;color:var(--muted);animation:levitate 4s ease-in-out infinite}
+.tech-pill:nth-child(2){animation-delay:0.5s}
+.tech-pill:nth-child(3){animation-delay:1s}
+.tech-pill:nth-child(4){animation-delay:1.5s}
+.tech-pill:nth-child(5){animation-delay:2s}
+.tech-pill:nth-child(6){animation-delay:2.5s}
+@keyframes levitate{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.ticon{font-size:1rem}
+
+/* SECTIONS */
+section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--neon1);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.5rem}
+.section-title{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;margin-bottom:1rem;line-height:1.1}
+.section-line{width:40px;height:2px;background:linear-gradient(90deg,var(--neon1),var(--neon2));margin-bottom:2rem;border-radius:2px}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.about-text p{color:var(--muted);line-height:1.8;margin-bottom:1rem}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.stat-card{background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:1.2rem;text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--neon1),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:0.78rem;color:var(--muted);margin-top:0.2rem}
+
+/* SKILLS */
+.skills-grid{display:flex;flex-wrap:wrap;gap:0.75rem}
+.skill-badge{display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 1rem;border-radius:8px;font-size:0.82rem;font-weight:500;border:1px solid var(--border);background:var(--glass);transition:all 0.2s;cursor:default}
+.skill-badge:hover{border-color:var(--neon1);background:rgba(124,111,255,0.1);transform:translateY(-2px)}
+
+/* PROJECTS */
+.filter-bar{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.filter-btn{padding:0.4rem 1rem;border-radius:999px;font-size:0.8rem;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:inherit}
+.filter-btn.active{background:var(--neon1);border-color:var(--neon1);color:#fff}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem}
+.project-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all 0.3s;cursor:pointer;position:relative}
+.project-card:hover{transform:translateY(-6px);border-color:var(--neon1);box-shadow:0 20px 60px rgba(124,111,255,0.15)}
+.project-thumb{height:160px;display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden}
+.thumb-food{background:linear-gradient(135deg,#1a0a00,#3d1a00)}
+.thumb-shop{background:linear-gradient(135deg,#000d1a,#001a3d)}
+.thumb-uni{background:linear-gradient(135deg,#0d001a,#1a003d)}
+.project-body{padding:1.2rem}
+.project-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:0.4rem}
+.project-desc{font-size:0.83rem;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+.tech-badges{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem}
+.tech-badge{font-family:'JetBrains Mono',monospace;font-size:0.7rem;padding:0.2rem 0.5rem;border-radius:4px;background:rgba(124,111,255,0.1);color:var(--neon1);border:1px solid rgba(124,111,255,0.2)}
+.project-links{display:flex;gap:0.7rem}
+.proj-btn{flex:1;padding:0.5rem;border-radius:8px;font-size:0.78rem;font-weight:500;text-align:center;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:inherit}
+.proj-btn:hover{border-color:var(--neon2);color:var(--neon2)}
+.proj-btn.main{background:linear-gradient(135deg,var(--neon1),var(--neon2));border:none;color:#fff}
+.hackathon-badge{position:absolute;top:10px;right:10px;background:linear-gradient(135deg,#ff6be7,#7c6fff);color:#fff;font-size:0.65rem;padding:0.2rem 0.6rem;border-radius:999px;font-weight:700;letter-spacing:0.05em}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--neon1),var(--neon2),transparent)}
+.tl-item{position:relative;margin-bottom:2.5rem}
+.tl-dot{position:absolute;left:-2.4rem;top:0.25rem;width:12px;height:12px;border-radius:50%;background:var(--neon1);border:2px solid var(--bg);box-shadow:0 0 10px var(--neon1)}
+.tl-date{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--neon2);margin-bottom:0.3rem}
+.tl-title{font-weight:600;margin-bottom:0.2rem}
+.tl-desc{font-size:0.85rem;color:var(--muted);line-height:1.6}
+
+/* GITHUB */
+.github-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.gh-card{background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:1.2rem}
+.gh-stat{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,var(--neon1),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.gh-label{font-size:0.78rem;color:var(--muted);margin-top:0.2rem}
+.lang-bar{height:6px;border-radius:999px;background:linear-gradient(90deg,var(--neon1),var(--neon2),var(--neon3));margin:1rem 0;overflow:hidden}
+.lang-list{display:flex;flex-direction:column;gap:0.5rem}
+.lang-item{display:flex;justify-content:space-between;align-items:center;font-size:0.82rem}
+.lang-pct{color:var(--muted)}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.contact-links{display:flex;flex-direction:column;gap:1rem}
+.contact-link{display:flex;align-items:center;gap:1rem;background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;text-decoration:none;color:var(--text);transition:all 0.2s}
+.contact-link:hover{border-color:var(--neon1);transform:translateX(4px)}
+.cl-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.cl-email{background:rgba(124,111,255,0.15)}
+.cl-gh{background:rgba(0,212,255,0.1)}
+.cl-li{background:rgba(0,100,200,0.15)}
+.cl-info{display:flex;flex-direction:column}
+.cl-name{font-weight:600;font-size:0.9rem}
+.cl-val{font-size:0.8rem;color:var(--muted)}
+.contact-form{display:flex;flex-direction:column;gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:0.4rem}
+.form-group label{font-size:0.78rem;color:var(--muted);letter-spacing:0.05em}
+.form-group input,.form-group textarea{background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:0.75rem 1rem;color:var(--text);font-family:inherit;font-size:0.9rem;transition:border-color 0.2s;resize:vertical}
+.form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--neon1)}
+.form-group textarea{min-height:100px}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);z-index:5000;display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;max-width:600px;width:100%;padding:2rem;position:relative;transform:scale(0.95);transition:transform 0.3s}
+.modal-overlay.open .modal{transform:scale(1)}
+.modal-close{position:absolute;top:1rem;right:1rem;background:var(--glass);border:1px solid var(--border);border-radius:8px;color:var(--muted);cursor:pointer;padding:0.4rem 0.7rem;font-size:1rem}
+
+/* CHATBOT */
+.chat-fab{position:fixed;bottom:2rem;right:2rem;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--neon1),var(--neon2));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.4rem;z-index:4000;box-shadow:0 0 30px rgba(124,111,255,0.5);transition:all 0.3s}
+.chat-fab:hover{transform:scale(1.1);box-shadow:0 0 50px rgba(124,111,255,0.7)}
+.chat-window{position:fixed;bottom:5.5rem;right:2rem;width:340px;height:480px;background:rgba(13,13,20,0.95);backdrop-filter:blur(20px);border:1px solid var(--border2);border-radius:20px;z-index:4000;display:flex;flex-direction:column;overflow:hidden;transform:scale(0.8) translateY(20px);opacity:0;pointer-events:none;transition:all 0.3s;transform-origin:bottom right}
+.chat-window.open{transform:scale(1) translateY(0);opacity:1;pointer-events:auto}
+.chat-header{padding:1rem 1.2rem;border-bottom:1px solid var(--border);background:var(--glass);display:flex;align-items:center;gap:0.7rem}
+.chat-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--neon1),var(--neon2));display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
+.chat-hinfo{flex:1}
+.chat-hname{font-weight:600;font-size:0.85rem}
+.chat-hstatus{font-size:0.7rem;color:#4eff91}
+.chat-msgs{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:0.7rem}
+.msg{max-width:85%;padding:0.6rem 0.9rem;border-radius:12px;font-size:0.82rem;line-height:1.5;animation:msgIn 0.2s ease-out}
+@keyframes msgIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.msg-bot{background:var(--glass2);border:1px solid var(--border);border-bottom-left-radius:4px;align-self:flex-start;color:var(--text)}
+.msg-user{background:linear-gradient(135deg,var(--neon1),var(--neon2));color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.typing{display:flex;gap:4px;padding:0.6rem 0.9rem;align-self:flex-start}
+.typing span{width:6px;height:6px;background:var(--muted);border-radius:50%;animation:blink 1.2s ease-in-out infinite}
+.typing span:nth-child(2){animation-delay:0.2s}
+.typing span:nth-child(3){animation-delay:0.4s}
+@keyframes blink{0%,80%,100%{opacity:0.2}40%{opacity:1}}
+.chat-footer{padding:0.7rem;border-top:1px solid var(--border);display:flex;gap:0.5rem}
+.chat-input{flex:1;background:var(--glass);border:1px solid var(--border);border-radius:999px;padding:0.5rem 1rem;color:var(--text);font-size:0.82rem;font-family:inherit}
+.chat-input:focus{outline:none;border-color:var(--neon1)}
+.chat-send{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--neon1),var(--neon2));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;color:#fff}
+.chat-chips{display:flex;flex-wrap:wrap;gap:0.4rem;padding:0.5rem 1rem}
+.chip{font-size:0.7rem;padding:0.25rem 0.6rem;border-radius:999px;border:1px solid var(--border);color:var(--muted);cursor:pointer;background:var(--glass);transition:all 0.15s}
+.chip:hover{border-color:var(--neon2);color:var(--neon2)}
+
+/* FOOTER */
+footer{text-align:center;padding:2rem;border-top:1px solid var(--border);color:var(--muted);font-size:0.82rem}
+.footer-socials{display:flex;justify-content:center;gap:1rem;margin-bottom:1rem}
+.social-btn{width:36px;height:36px;border-radius:10px;background:var(--glass);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--muted);transition:all 0.2s;font-size:0.9rem}
+.social-btn:hover{border-color:var(--neon1);color:var(--neon1)}
+
+/* BACK TO TOP */
+.back-top{position:fixed;bottom:2rem;left:2rem;width:40px;height:40px;border-radius:10px;background:var(--glass);border:1px solid var(--border);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3000;opacity:0;transition:all 0.3s;font-size:1rem}
+.back-top.show{opacity:1}
+.back-top:hover{border-color:var(--neon1);color:var(--neon1)}
+
+/* GLOW HOVER */
+.glow-card{transition:all 0.3s}
+.glow-card:hover{box-shadow:0 0 40px rgba(124,111,255,0.1)}
+
+/* SEPARATOR */
+.sep{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0}
+
+/* TYPING */
+.typing-cursor::after{content:'|';animation:blink-cursor 0.7s step-end infinite;color:var(--neon2)}
+@keyframes blink-cursor{50%{opacity:0}}
+
+/* AVAILABLE BADGE */
+.avail-badge{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(78,255,145,0.1);border:1px solid rgba(78,255,145,0.3);color:#4eff91;font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:999px;margin-top:1rem}
+.avail-dot{width:6px;height:6px;background:#4eff91;border-radius:50%;animation:pulse 1.5s ease-in-out infinite}
+
+@media(max-width:768px){
+  nav{padding:0.75rem 1rem}
+  .nav-links{display:none}
+  .about-grid,.contact-grid{grid-template-columns:1fr}
+  section{padding:3rem 1rem}
+  .hero{padding:5rem 1rem 2rem}
+  .chat-window{width:calc(100vw - 2rem);right:1rem}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav id="navbar">
+  <div class="logo">⟨ Nikhil/⟩</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#github">GitHub</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <span class="nav-badge">Open to Work</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag"><span class="tag-dot"></span> 3rd Year · BTech(CSE)</div>
+    <h1><span class="grad">Nikhilesh Lavishetty</span></h1>
+    <p class="hero-sub" style="font-size:1.3rem;font-weight:600;color:#ccc;margin-bottom:0.5rem"><span id="typed-role"></span><span class="typing-cursor"></span></p>
+    <p class="hero-tagline">I build scalable web applications and intelligent digital solutions.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary">🚀 View Projects</a>
+      <a href="https://github.com" class="btn btn-ghost">⭐ GitHub</a>
+      <a href="https://linkedin.com" class="btn btn-ghost">in LinkedIn</a>
+    </div>
+    <div class="tech-float">
+      <div class="tech-pill"><span class="ticon">⚛️</span> React</div>
+      <div class="tech-pill"><span class="ticon">🐘</span> PHP</div>
+      <div class="tech-pill"><span class="ticon">☕</span> Java</div>
+      <div class="tech-pill"><span class="ticon">🔥</span> Firebase</div>
+      <div class="tech-pill"><span class="ticon">🗄️</span> MySQL</div>
+      <div class="tech-pill"><span class="ticon">📦</span> Git</div>
+    </div>
+    <div class="avail-badge"><span class="avail-dot"></span> Available for Internship · 2026</div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ABOUT -->
+<section id="about" style="max-width:1100px;margin:0 auto;padding:5rem 2rem">
+  <div class="section-label">// 01. about</div>
+  <h2 class="section-title">Who I Am</h2>
+  <div class="section-line"></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Hey! I'm <strong style="color:#fff">Nikhilesh Lavishetty</strong>, a 3rd year BTech(CSE) student passionate about building products that matter. I love the full spectrum — from clean backend APIs to pixel-perfect frontends.</p>
+      <p>I've shipped projects ranging from inventory management systems to hackathon-winning grievance platforms. When I'm not coding, I'm exploring new frameworks and contributing to open source.</p>
+      <p style="color:var(--neon2);font-size:0.85rem;font-weight:500">🎯 Goal: Join a high-impact team where I can build and learn at scale.</p>
+      <div style="margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="#" class="btn btn-primary" style="padding:0.6rem 1.2rem;font-size:0.85rem">⬇ Download Resume</a>
+        <a href="#contact" class="btn btn-ghost" style="padding:0.6rem 1.2rem;font-size:0.85rem">Say Hello →</a>
+      </div>
+    </div>
+    <div>
+      <div class="about-stats">
+        <div class="stat-card glow-card">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Projects Shipped</div>
+        </div>
+        <div class="stat-card glow-card">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Hackathon Win</div>
+        </div>
+        <div class="stat-card glow-card">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Technologies</div>
+        </div>
+        <div class="stat-card glow-card">
+          <div class="stat-num">2028</div>
+          <div class="stat-label">Graduating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- PROJECTS -->
+<section id="projects" style="max-width:1100px;margin:0 auto;padding:5rem 2rem">
+  <div class="section-label">// 02. projects</div>
+  <h2 class="section-title">What I've Built</h2>
+  <div class="section-line"></div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProjects('all',this)">All</button>
+    <button class="filter-btn" onclick="filterProjects('php',this)">PHP</button>
+    <button class="filter-btn" onclick="filterProjects('java',this)">Java</button>
+    <button class="filter-btn" onclick="filterProjects('firebase',this)">Firebase</button>
+    <button class="filter-btn" onclick="filterProjects('hackathon',this)">Hackathon</button>
+  </div>
+  <div class="projects-grid" id="projects-grid">
+
+    <div class="project-card glow-card" data-tags="php,js,mysql" onclick="openModal('food')">
+      <div class="project-thumb thumb-food">🍔</div>
+      <div class="project-body">
+        <div class="project-title">Food Management System</div>
+        <div class="project-desc">Full-featured inventory & order management platform. Real-time tracking, supplier management, and analytics dashboard.</div>
+        <div class="tech-badges">
+          <span class="tech-badge">PHP</span>
+          <span class="tech-badge">JavaScript</span>
+          <span class="tech-badge">MySQL</span>
+          <span class="tech-badge">XAMPP</span>
+        </div>
+        <div class="project-links">
+          <button class="proj-btn main">View Details</button>
+          <button class="proj-btn">GitHub ↗</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card glow-card" data-tags="java,firebase" onclick="openModal('shop')">
+      <div class="project-thumb thumb-shop">🛒</div>
+      <div class="project-body">
+        <div class="project-title">Shopping Application</div>
+        <div class="project-desc">Android shopping app with Firebase auth, real-time cart sync, product catalog, and secure checkout flow.</div>
+        <div class="tech-badges">
+          <span class="tech-badge">Java</span>
+          <span class="tech-badge">XML</span>
+          <span class="tech-badge">Firebase</span>
+          <span class="tech-badge">Android</span>
+        </div>
+        <div class="project-links">
+          <button class="proj-btn main">View Details</button>
+          <button class="proj-btn">GitHub ↗</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card glow-card" data-tags="java,firebase,hackathon" onclick="openModal('uni')">
+      <span class="hackathon-badge">🏆 Hackathon</span>
+      <div class="project-thumb thumb-uni">🎓</div>
+      <div class="project-body">
+        <div class="project-title">Smart Grievance System</div>
+        <div class="project-desc">University complaint tracking system with role-based access, real-time status updates, and admin dashboard.</div>
+        <div class="tech-badges">
+          <span class="tech-badge">Java</span>
+          <span class="tech-badge">Firebase</span>
+          <span class="tech-badge">Android</span>
+        </div>
+        <div class="project-links">
+          <button class="proj-btn main">View Details</button>
+          <button class="proj-btn">GitHub ↗</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="max-width:1100px;margin:0 auto;padding:5rem 2rem">
+  <div class="section-label">// 03. experience</div>
+  <h2 class="section-title">Journey So Far</h2>
+  <div class="section-line"></div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2026 — Hackathon</div>
+      <div class="tl-title">Smart University Grievance System 🏆</div>
+      <div class="tl-desc">Built a complete grievance management platform in 24 hours. Implemented real-time Firebase sync, role-based access, and complaint status tracking. Won the hackathon for best use of technology.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2026 — Academic Project</div>
+      <div class="tl-title">Food Management System</div>
+      <div class="tl-desc">Developed a full-stack PHP application for restaurant inventory and order management. Integrated real-time stock alerts, supplier management, and reporting with MySQL.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2025 — Android Development</div>
+      <div class="tl-title">Shopping Application</div>
+      <div class="tl-desc">Built an Android e-commerce app from scratch using Java and Firebase. Implemented authentication, real-time cart management, and product catalog with search functionality.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2025 — Foundation</div>
+      <div class="tl-title">Started  CSE</div>
+      <div class="tl-desc">Began my engineering journey, mastered programming fundamentals, data structures, and started building projects to apply theoretical knowledge in real-world contexts.</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- SKILLS -->
+<section id="skills" style="max-width:1100px;margin:0 auto;padding:5rem 2rem">
+  <div class="section-label">// 04. skills</div>
+  <h2 class="section-title">Tech Arsenal</h2>
+  <div class="section-line"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem">
+    <div>
+      <p style="color:var(--muted);font-size:0.82rem;margin-bottom:1rem;letter-spacing:0.05em">LANGUAGES & FRAMEWORKS</p>
+      <div class="skills-grid">
+        <span class="skill-badge">⚛️ React</span>
+        <span class="skill-badge">🌐 JavaScript</span>
+        <span class="skill-badge">🐘 PHP</span>
+        <span class="skill-badge">☕ Java</span>
+        <span class="skill-badge">🐍 Python</span>
+        <span class="skill-badge">📱 Android (XML)</span>
+        <span class="skill-badge">🎨 HTML/CSS</span>
+        <span class="skill-badge">🔄 REST APIs</span>
+        <span class="skill-badge">   .NET</span>
+        <span class="skill-badge">   C++</span>
+        <span class="skill-badge">   Flutter</span>
+        <span class="skill-badge">   </span>
+      </div>
+    </div>
+    <div>
+      <p style="color:var(--muted);font-size:0.82rem;margin-bottom:1rem;letter-spacing:0.05em">DATABASES & TOOLS</p>
+      <div class="skills-grid">
+        <span class="skill-badge">🔥 Firebase</span>
+        <span class="skill-badge">🗄️ MySQL</span>
+        <span class="skill-badge">🍃 MongoDB</span>
+        <span class="skill-badge">🐙 Git & GitHub</span>
+        <span class="skill-badge">💻 VS Code</span>
+        <span class="skill-badge">🛠 XAMPP</span>
+        <span class="skill-badge">🐧 Linux</span>
+        <span class="skill-badge">☁️ Cloud Basics</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- GITHUB -->
+<section id="github" style="max-width:1100px;margin:0 auto;padding:5rem 2rem">
+  <div class="section-label">// 05. github</div>
+  <h2 class="section-title">GitHub Activity</h2>
+  <div class="section-line"></div>
+  <div class="github-grid" style="margin-bottom:2rem">
+    <div class="gh-card glow-card">
+      <div class="gh-stat">48</div>
+      <div class="gh-label">Repositories</div>
+    </div>
+    <div class="gh-card glow-card">
+      <div class="gh-stat">312</div>
+      <div class="gh-label">Contributions (2025)</div>
+    </div>
+    <div class="gh-card glow-card">
+      <div class="gh-stat">24</div>
+      <div class="gh-label">Pull Requests</div>
+    </div>
+    <div class="gh-card glow-card">
+      <div class="gh-stat">89</div>
+      <div class="gh-label">Commits This Year</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+    <div class="gh-card glow-card">
+      <div style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;letter-spacing:0.05em">TOP LANGUAGES</div>
+      <div class="lang-bar"></div>
+      <div class="lang-list">
+        <div class="lang-item"><span>Java</span><span class="lang-pct">38%</span></div>
+        <div class="lang-item"><span>PHP</span><span class="lang-pct">27%</span></div>
+        <div class="lang-item"><span>JavaScript</span><span class="lang-pct">22%</span></div>
+        <div class="lang-item"><span>Other</span><span class="lang-pct">13%</span></div>
+      </div>
+    </div>
+    <div class="gh-card glow-card">
+      <div style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;letter-spacing:0.05em">PINNED REPOS</div>
+      <div style="display:flex;flex-direction:column;gap:0.7rem">
+        <div style="border:1px solid var(--border);border-radius:8px;padding:0.7rem">
+          <div style="font-size:0.85rem;font-weight:600">food-management-system</div>
+          <div style="font-size:0.75rem;color:var(--muted)">PHP · MySQL · ⭐ 12</div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:8px;padding:0.7rem">
+          <div style="font-size:0.85rem;font-weight:600">smart-grievance-app</div>
+          <div style="font-size:0.75rem;color:var(--muted)">Java · Firebase · ⭐ 18</div>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:8px;padding:0.7rem">
+          <div style="font-size:0.85rem;font-weight:600">shopping-android-app</div>
+          <div style="font-size:0.75rem;color:var(--muted)">Java · XML · ⭐ 9</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- CONTACT -->
+<section id="contact" style="max-width:1100px;margin:0 auto;padding:5rem 2rem">
+  <div class="section-label">// 06. contact</div>
+  <h2 class="section-title">Let's Connect</h2>
+  <div class="section-line"></div>
+  <p style="color:var(--muted);margin-bottom:2.5rem;max-width:500px">Have a project in mind or want to discuss an opportunity? I'm all ears. Let's build something great together.</p>
+  <div class="contact-grid">
+    <div class="contact-links">
+      <a href="mailto:nikhilshetty820@gmail.com" class="contact-link">
+        <div class="cl-icon cl-email">📧</div>
+        <div class="cl-info"><span class="cl-name">Email</span><span class="cl-val">nikhilshetty820@gmail.com</span></div>
+        <span style="color:var(--muted);margin-left:auto">→</span>
+      </a>
+      <a href="https://github.com" class="contact-link">
+        <div class="cl-icon cl-gh">🐙</div>
+        <div class="cl-info"><span class="cl-name">GitHub</span><span class="cl-val">github.com/nikhilshetty</span></div>
+        <span style="color:var(--muted);margin-left:auto">→</span>
+      </a>
+      <a href="https://linkedin.com" class="contact-link">
+        <div class="cl-icon cl-li">💼</div>
+        <div class="cl-info"><span class="cl-name">LinkedIn</span><span class="cl-val">linkedin.com/in/nikhilshetty</span></div>
+        <span style="color:var(--muted);margin-left:auto">→</span>
+      </a>
+    </div>
+    <div class="contact-form">
+      <div class="form-group">
+        <label>NAME</label>
+        <input type="text" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label>EMAIL</label>
+        <input type="email" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label>MESSAGE</label>
+        <textarea placeholder="Tell me about your project or opportunity..."></textarea>
+      </div>
+      <button class="btn btn-primary" onclick="handleSend()">Send Message ✈️</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-socials">
+    <a href="#" class="social-btn">🐙</a>
+    <a href="#" class="social-btn">💼</a>
+    <a href="#" class="social-btn">🐦</a>
+    <a href="#" class="social-btn">📧</a>
+  </div>
+  <p>Built with 💜 by <strong style="color:#fff">Nikhilesh Lavishetty</strong> · Computer Engineering · 2028</p>
+  <p style="margin-top:0.3rem;font-size:0.75rem">React · Firebase · Framer Motion · Tailwind CSS</p>
+</footer>
+
+<!-- BACK TO TOP -->
+<button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- CHAT FAB -->
+<button class="chat-fab" id="chat-fab" onclick="toggleChat()">💬</button>
+
+<!-- CHAT WINDOW -->
+<div class="chat-window" id="chat-window">
+  <div class="chat-header">
+    <div class="chat-avatar">🤖</div>
+    <div class="chat-hinfo">
+      <div class="chat-hname">Portfolio Assistant</div>
+      <div class="chat-hstatus">● Online</div>
+    </div>
+    <button onclick="toggleChat()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem">✕</button>
+  </div>
+  <div class="chat-msgs" id="chat-msgs"></div>
+  <div class="chat-chips" id="chat-chips">
+    <span class="chip" onclick="askChip('What projects have you built?')">Projects?</span>
+    <span class="chip" onclick="askChip('What are your skills?')">Skills?</span>
+    <span class="chip" onclick="askChip('How can I contact you?')">Contact?</span>
+    <span class="chip" onclick="askChip('Tell me about the hackathon')">Hackathon?</span>
+  </div>
+  <div class="chat-footer">
+    <input class="chat-input" id="chat-input" type="text" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendMsg()">
+    <button class="chat-send" onclick="sendMsg()">→</button>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+// SCROLL PROGRESS
+window.addEventListener('scroll',()=>{
+  const el=document.getElementById('progress');
+  const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
+  el.style.width=pct+'%';
+  const bt=document.getElementById('back-top');
+  bt.classList.toggle('show',window.scrollY>500);
+});
+
+// TYPING ANIMATION
+const roles=['AI Developer','Android Developer','Web Developer','Problem Solver','Full Stack Developer'];
+let ri=0,ci=0,del=false;
+function typeRole(){
+  const el=document.getElementById('typed-role');
+  if(!el)return;
+  const word=roles[ri];
+  if(!del){
+    el.textContent=word.slice(0,ci+1);
+    ci++;
+    if(ci===word.length){del=true;setTimeout(typeRole,1500);return}
+  }else{
+    el.textContent=word.slice(0,ci-1);
+    ci--;
+    if(ci===0){del=false;ri=(ri+1)%roles.length}
+  }
+  setTimeout(typeRole,del?60:80);
+}
+typeRole();
+
+// PROJECT FILTER
+function filterProjects(tag,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.project-card').forEach(card=>{
+    const tags=card.dataset.tags||'';
+    card.style.display=(tag==='all'||tags.includes(tag))?'block':'none';
+  });
+}
+
+// MODAL DATA
+const modals={
+  food:{title:'Food Management System',emoji:'🍔',desc:'A comprehensive PHP-based food inventory and order management system built for restaurants and food service businesses. Features include real-time stock tracking, automated reorder alerts, supplier management, order processing, and detailed analytics reporting.',tech:['PHP','JavaScript','MySQL','XAMPP','CSS3','Bootstrap'],highlights:['Real-time inventory tracking','Order management workflow','Supplier & vendor management','Analytics & reporting dashboard','User authentication & roles']},
+  shop:{title:'Shopping Application',emoji:'🛒',desc:'A full-featured Android shopping application built natively in Java with Firebase backend. Includes Firebase Authentication for secure login/signup, Firestore for real-time product catalog and cart management, and a clean Material Design UI.',tech:['Java','Android XML','Firebase Auth','Firestore','Material Design'],highlights:['Firebase Authentication (Google + Email)','Real-time cart sync across devices','Product search & filtering','Wishlist & order history','Push notification support']},
+  uni:{title:'Smart University Grievance System',emoji:'🎓',desc:'Built during a 24-hour hackathon, this system addresses the pain point of inefficient complaint handling in universities. Features role-based access for students, faculty, and admins, with real-time complaint status tracking and automated escalation.',tech:['Java','Firebase Realtime DB','Firebase Auth','Android XML'],highlights:['Role-based access control','Real-time complaint status updates','Automated escalation workflow','Admin analytics dashboard','Won hackathon — Best Tech Solution']}
+};
+
+function openModal(id){
+  const m=modals[id];
+  document.getElementById('modal-content').innerHTML=`
+    <div style="font-size:2.5rem;margin-bottom:1rem">${m.emoji}</div>
+    <h3 style="font-size:1.3rem;margin-bottom:0.5rem">${m.title}</h3>
+    <p style="color:var(--muted);font-size:0.85rem;line-height:1.6;margin-bottom:1.2rem">${m.desc}</p>
+    <div style="margin-bottom:1.2rem">
+      <p style="font-size:0.75rem;color:var(--neon1);letter-spacing:0.1em;margin-bottom:0.6rem">TECH STACK</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.4rem">${m.tech.map(t=>`<span class="tech-badge">${t}</span>`).join('')}</div>
+    </div>
+    <div>
+      <p style="font-size:0.75rem;color:var(--neon1);letter-spacing:0.1em;margin-bottom:0.6rem">KEY HIGHLIGHTS</p>
+      ${m.highlights.map(h=>`<div style="display:flex;gap:0.5rem;align-items:flex-start;margin-bottom:0.4rem"><span style="color:var(--neon2)">▸</span><span style="font-size:0.85rem;color:var(--muted)">${h}</span></div>`).join('')}
+    </div>
+    <div style="display:flex;gap:0.7rem;margin-top:1.5rem">
+      <a href="#" class="btn btn-primary" style="flex:1;text-align:center;font-size:0.82rem">GitHub ↗</a>
+      <a href="#" class="btn btn-ghost" style="flex:1;text-align:center;font-size:0.82rem">Live Demo ↗</a>
+    </div>
+  `;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal(e){
+  if(!e||e.target===document.getElementById('modal-overlay'))
+    document.getElementById('modal-overlay').classList.remove('open');
+}
+
+// CHAT BOT
+let chatOpen=false;
+let chatInited=false;
+
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('chat-window').classList.toggle('open',chatOpen);
+  if(chatOpen&&!chatInited){
+    chatInited=true;
+    setTimeout(()=>addBotMsg("Hey! 👋 I'm Rahul's Portfolio Assistant. Ask me anything about his skills, projects, or how to get in touch!"),400);
+  }
+}
+
+function addBotMsg(text){
+  const msgs=document.getElementById('chat-msgs');
+  const typing=document.createElement('div');
+  typing.className='typing msg-bot';
+  typing.innerHTML='<span></span><span></span><span></span>';
+  msgs.appendChild(typing);
+  msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(()=>{
+    typing.remove();
+    const m=document.createElement('div');
+    m.className='msg msg-bot';
+    m.textContent=text;
+    msgs.appendChild(m);
+    msgs.scrollTop=msgs.scrollHeight;
+  },900);
+}
+
+function addUserMsg(text){
+  const msgs=document.getElementById('chat-msgs');
+  const m=document.createElement('div');
+  m.className='msg msg-user';
+  m.textContent=text;
+  msgs.appendChild(m);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+const botResponses={
+  'project':()=>"I've built 3 main projects: 🍔 Food Management System (PHP+MySQL), 🛒 Shopping App (Java+Firebase), and 🎓 Smart Grievance System (Java+Firebase) which won a hackathon! Click any project card to see details.",
+  'food':()=>"The Food Management System is a PHP+MySQL web app for restaurants — covers inventory, orders, suppliers, and analytics. Built with XAMPP during my 3rd year.",
+  'shop':()=>"The Shopping Application is an Android app built in Java with Firebase Auth and Firestore. It has real-time cart sync, product search, and a clean Material Design UI.",
+  'grievance':()=>"🏆 The Smart Grievance System was built in 24 hours at a hackathon! It's an Android app (Java+Firebase) for university complaint tracking with role-based access and real-time updates. We won Best Tech Solution!",
+  'hackathon':()=>"Participated in a 24-hour hackathon and built the Smart University Grievance System with my team. We won the Best Tech Solution award! 🏆",
+  'skill':()=>"My main skills: React, JavaScript, PHP, Java (Android), Firebase, MySQL, MongoDB, Git. I'm comfortable with both frontend and backend development.",
+  'tech':()=>"Tech I work with: ⚛️ React, 🐘 PHP, ☕ Java, 🔥 Firebase, 🗄️ MySQL, 🍃 MongoDB, 📦 Git. Currently learning more React and cloud technologies.",
+  'contact':()=>"You can reach Rahul at 📧 rahul@example.com, or connect on LinkedIn and GitHub. There's also a contact form on this page!",
+  'github':()=>"GitHub: github.com/rahulpatel 🐙 — has 48 repos, 312+ contributions, and pinned projects including the hackathon-winning grievance app!",
+  'linkedin':()=>"LinkedIn: linkedin.com/in/rahulpatel 💼 — feel free to connect and message!",
+  'internship':()=>"Yes! Rahul is actively looking for internship opportunities for 2025. He's open to full-stack, backend, or Android development roles. Use the contact form to reach out!",
+  'experience':()=>"Experience includes: 3 full project builds, 1 hackathon win, academic projects in web and Android dev, and hands-on experience with PHP, Java, Firebase, and MySQL.",
+  'default':()=>"Great question! I can tell you about Rahul's projects, skills, experience, GitHub, or contact info. What would you like to know?"
+};
+
+function getBotReply(msg){
+  const m=msg.toLowerCase();
+  if(m.includes('food'))return botResponses.food();
+  if(m.includes('shop')||m.includes('cart'))return botResponses.shop();
+  if(m.includes('grievance')||m.includes('university'))return botResponses.grievance();
+  if(m.includes('hackathon'))return botResponses.hackathon();
+  if(m.includes('skill')||m.includes('tech')||m.includes('know'))return botResponses.skill();
+  if(m.includes('contact')||m.includes('reach')||m.includes('email'))return botResponses.contact();
+  if(m.includes('github'))return botResponses.github();
+  if(m.includes('linkedin'))return botResponses.linkedin();
+  if(m.includes('intern')||m.includes('job')||m.includes('hire'))return botResponses.internship();
+  if(m.includes('project')||m.includes('built')||m.includes('made'))return botResponses.project();
+  if(m.includes('experience'))return botResponses.experience();
+  return botResponses.default();
+}
+
+function sendMsg(){
+  const input=document.getElementById('chat-input');
+  const text=input.value.trim();
+  if(!text)return;
+  addUserMsg(text);
+  input.value='';
+  setTimeout(()=>addBotMsg(getBotReply(text)),200);
+}
+
+function askChip(q){
+  if(!chatOpen)toggleChat();
+  setTimeout(()=>{addUserMsg(q);setTimeout(()=>addBotMsg(getBotReply(q)),300)},chatInited?0:1000);
+}
+
+function handleSend(){
+  const btn=event.target;
+  btn.textContent='Sent! ✅';
+  btn.style.background='linear-gradient(135deg,#4eff91,#00d4ff)';
+  setTimeout(()=>{btn.textContent='Send Message ✈️';btn.style.background=''},3000);
+}
+</script>
+</body>
+</html>
